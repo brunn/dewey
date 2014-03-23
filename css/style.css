@@ -76,12 +76,16 @@ table {
   to { opacity: 1;-webkit-transform: translateY(0); }}
 
 @-webkit-keyframes slide-down {
-  from {-webkit-transform: translateY(-5rem);}
-  to {-webkit-transform: translateyY(0);}}
+  from { -webkit-transform: translateY(-5rem); }
+  to { -webkit-transform: translateY(0); }}
 
 @-webkit-keyframes slide-right {
-  from {-webkit-transform: translateX(-5rem);}
-  to {-webkit-transform: translateX(0);}}
+  from { -webkit-transform: translateX(-5rem); }
+  to { -webkit-transform: translateX(0); }}
+
+@-webkit-keyframes slide-left {
+  from { -webkit-transform: translateX(5rem); }
+  to { -webkit-transform: translateX(0); }}
 
 /*-----------------------------
   Global
@@ -126,7 +130,7 @@ body {
 }
 
 .search-group {
-  -webkit-animation: slide-right 500ms ease-in-out;
+  -webkit-animation: slide-right 500ms cubic-bezier(.65, -1, .25, 1.75);
 }
 
 .search-group input[type="search"] {
@@ -160,25 +164,15 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 /*-----------------------------
-  Settings Dropdown Menu
+  New Settings Dropdown Design
 -----------------------------*/
 
-#settings {
-  background: hsla(201, 16%, 17%, 0.05);
-  display: inline-block;
-  position: fixed;
-  height: 3.125rem;
-  width: 3.125rem;
-  right: 0;
-  text-align: left;
-  top: 0;
-  white-space: nowrap;
-  z-index: 9999999;
-}
-
-.settings-icon {
-  background: url(../images/settings.svg) no-repeat center;
+.settings-toggle {
+  background: hsla(201, 16%, 17%, 0.05) url(../images/settings.svg) no-repeat center;
   background-size: 1.25rem 1.25rem;
+  position: absolute;
+  right: 0;
+  top: 0;
   cursor: pointer;
   display: block;
   height: 3.125rem;
@@ -186,11 +180,94 @@ input[type="search"]::-webkit-search-cancel-button {
   -webkit-filter: saturate(0);
   transition: -webkit-filter 100ms ease-in-out;
   -webkit-backface-visibility: hidden;
+  -webkit-animation: slide-left 500ms ease-in-out;
 }
 
-.settings-icon:hover {
+.settings-toggle:hover {
   -webkit-filter: saturate(1);
 }
+
+#settings {
+  background: hsl(201, 16%, 17%);
+  height: 30rem;
+  width: 100vw;
+  padding: 4rem 10%;
+  z-index: -9999999;
+}
+
+.col-1,
+.col-2,
+.col-3 {
+  display: inline-block;
+  vertical-align: top;
+  line-height: 3.5rem;
+  color: white;
+  font-size: 1.125rem;
+  font-weight: 100;
+}
+
+.col-1 {
+  width: 15rem;
+}
+
+.col-2 {
+  width: 25rem;
+}
+
+.col-3 {
+  line-height: 1.75rem;
+  font-size: 1rem;
+}
+
+#settings ul a {
+  color: white;
+  text-decoration: none;
+}
+
+.options:before,
+.website:before,
+.review:before,
+.feedback:before,
+.donate:before,
+.email:before,
+.docs:before,
+.checkbox input[type=checkbox] {
+  margin-right: 1rem;
+  vertical-align: middle;
+}
+
+.docs:before {
+  content: url(../images/docs.svg);
+}
+
+.feedback:before {
+  content: url(../images/feedback.svg);
+}
+
+.review:before {
+  content: url(../images/review.svg);
+}
+
+.donate:before {
+  content: url(../images/donate.svg);
+}
+
+.email:before {
+  content: url(../images/contact.svg);
+}
+
+.website:before {
+  content: url(../images/link.svg);
+}
+
+.important {
+  color: hsl(14, 84%, 66%) !important;
+}
+
+/*-----------------------------
+  Legacy Bootstrap Inspired Dropdown Menu
+-----------------------------*/
+
 
 .open > .dropdown-menu {
   display: block;
@@ -211,7 +288,7 @@ input[type="search"]::-webkit-search-cancel-button {
   box-shadow: 0 0 20px -2px hsla(0, 0%, 0%, 0.2);
   display: none;
   list-style: none;
-  min-width: 12rem;
+  min-width: 100%;
   padding: .75rem 0;
   position: absolute;
   right: 0;
@@ -239,93 +316,6 @@ input[type="search"]::-webkit-search-cancel-button {
 .dropdown-menu > li > a:focus {
   background-color: hsla(201, 16%, 17%, 0.05);
   color: hsl(14, 84%, 66%);
-}
-
-.options:before,
-.website:before,
-.review:before,
-.feedback:before,
-.donate:before,
-.email:before,
-.docs:before {
-  display: inline-block;
-  height: 1rem;
-  margin: 0 .625rem 3px 0;
-  vertical-align: middle;
-  width: 1rem;
-}
-
-.options:before {
-  content: url(../images/options.svg);
-}
-
-.website:before {
-  content: url(../images/link.svg);
-}
-
-.review:before {
-  content: url(../images/review.svg);
-  padding-bottom: 2px;
-}
-
-.feedback:before {
-  content: url(../images/feedback.svg);
-}
-
-.donate:before {
-  content: url(../images/donate.svg);
-}
-
-.email:before {
-  content: url(../images/contact.svg);
-}
-
-.docs:before {
-  content: url(../images/docs.svg);
-  margin-top: -1px;
-}
-
-.divider {
-  border-top: 1px solid hsl(0, 0%, 87%);
-  display: block;
-  margin-top: .75rem;
-  padding: 1rem 1rem .5rem 1rem;
-}
-
-.divider > li:first-child {
-  color: hsl(0, 0%, 33%);
-}
-
-.divider > li {
-  color: hsl(0, 0%, 80%);
-  font: 400 .8rem/1.5 "Source Sans Pro", sans-serif;
-}
-
-.divider > li > a {
-  color: hsl(0, 0%, 80%);
-  transition: color .25s ease;
-}
-
-.divider > li > a:hover {
-  color: hsl(14, 84%, 66%);
-}
-
-.checkbox {
-  margin-top: 5px;
-}
-
-.checkbox input[type=checkbox] {
-  margin-right: 5px;
-}
-
-.search-tips {
-  color: hsl(0, 0%, 80%);
-  font-weight: 200;
-  margin-top: 3rem;
-}
-
-.important {
-  color: hsl(14, 84%, 66%) !important;
 }
 
 /*-----------------------------
